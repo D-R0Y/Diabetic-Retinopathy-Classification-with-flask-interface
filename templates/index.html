@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Classifier</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #007bff;
+      }
+
+      input[type="file"] {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+
+      .prediction {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      #image-preview {
+        margin-top: 20px;
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Diabetic Retinopathy Image Classifier</h1>
+
+      <form action="/" method="post" enctype="multipart/form-data">
+        <input
+          class="form-control"
+          type="file"
+          name="imagefile"
+          id="imagefile"
+          onchange="previewImage(event)"
+        />
+        <input class="btn btn-primary" type="submit" value="Predict Image" />
+      </form>
+
+      <div id="image-preview"></div>
+
+      {% if prediction %}
+      <p class="prediction">The image you gave is of class {{prediction}}</p>
+      {% endif %}
+    </div>
+
+    <script>
+      function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          var output = document.getElementById("image-preview");
+          output.innerHTML = '<img src="' + reader.result + '" />';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    </script>
+  </body>
+</html>
